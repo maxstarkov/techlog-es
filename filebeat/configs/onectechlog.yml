@@ -1,0 +1,12 @@
+- type: log
+  enabled: true
+  paths:
+    - D:\techlog-arch\*\*\*\*\*\*\*.log
+  
+  fields:
+    log_type: all
+    log_timezone: Asia/Yekaterinburg
+
+  multiline.pattern: ^\d{2}:\d{2}\.\d{6}
+  multiline.negate: true
+  multiline.match: after

@@ -1,0 +1,39 @@
+version: '3'
+services:
+  techlog-node1:
+    image: amazon/opendistro-for-elasticsearch:1.4.0
+    container_name: techlog-node1
+    environment:
+      - discovery.type=single-node
+      - cluster.name=techlog-cluster
+      - bootstrap.memory_lock=true # along with the memlock settings below, disables swapping
+      - "ES_JAVA_OPTS=-Xms2024m -Xmx2024m" # minimum and maximum Java heap size, recommend setting both to 50% of system RAM
+    ulimits:
+      memlock:
+        soft: -1
+        hard: -1
+    volumes:
+      - techlog-data1:/usr/share/elasticsearch/data
+    ports:
+      - 9200:9200
+      - 9600:9600 # required for Performance Analyzer
+    networks:
+      - techlog-net
+  kibana:
+    image: amazon/opendistro-for-elasticsearch-kibana:1.4.0
+    container_name: techlog-kibana
+    ports:
+      - 5601:5601
+    expose:
+      - "5601"
+    environment:
+      ELASTICSEARCH_URL: https://192.168.33.30:9200
+      ELASTICSEARCH_HOSTS: https://192.168.33.30:9200
+    networks:
+      - techlog-net
+
+volumes:
+  techlog-data1:
+  
+networks:
+  techlog-net:

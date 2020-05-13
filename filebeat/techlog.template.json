@@ -1,0 +1,87 @@
+{
+  "order": 0,
+  "index_patterns": [
+    "techlog-*"
+  ],
+  "settings": {
+    "index": {
+      "codec": "best_compression",
+      "refresh_interval": "10s",
+      "number_of_shards": "1",
+      "translog": {
+        "durability": "async"
+      },
+      "number_of_replicas": "0",
+      "query": {
+        "default_field": "message"
+      }
+    }
+  },
+  "mappings": {
+	  "dynamic_templates": [
+		{
+		  "strings_as_keyword": {
+			"mapping": {
+			  "type": "keyword",
+			  "ignore_above": 8191
+			},
+			"match_mapping_type": "string"
+		  }
+		},
+		{
+		  "indexed_longs": {
+			"mapping": {
+			  "type": "long"
+			},
+			"match_mapping_type": "long"
+		  }
+		}
+	  ],
+	  "properties": {
+		"@timestamp": {
+		  "type": "date"
+		},
+		"message": {
+		  "type": "text",
+		  "norms": false
+		},
+		"duration": {
+		  "type": "long"
+		},
+		"Rows": {
+		  "type": "long"
+		},
+		"RowsAffected": {
+		  "type": "long"
+		},
+		"Memory": {
+		  "type": "long"
+		},
+		"MemoryPeak": {
+		  "type": "long"
+		},
+		"InBytes": {
+		  "type": "long"
+		},
+		"OutBytes": {
+		  "type": "long"
+		},
+		"CpuTime": {
+		  "type": "long"
+		},
+		"offset": {
+		  "type": "long"
+		},
+		"avgResponseTime": {
+		  "type": "long"
+		},
+		"maxResponseTime": {
+		  "type": "long"
+		},
+		"packetsTimedOut": {
+		  "type": "long"
+		}
+	  }
+  },
+  "aliases": {}
+}
